@@ -1,0 +1,10 @@
+language: node_js
+sudo: false
+env:
+  - JQUERY=1
+  - JQUERY=2
+node_js:
+  - "stable"
+install:
+  - npm install
+  - npm install jquery@$JQUERY

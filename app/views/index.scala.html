@@ -1,0 +1,180 @@
+
+@import play.api.data.Form
+@import helper._
+@import model._
+@import scala.util.Success
+@(pokemones: Seq[PokeCool], pokeTipos: Seq[PokeTipo], pokeForm: Form[PokeData])(implicit messages: Messages)
+
+@main("PokeCool") {
+
+    <div class="container">
+        <br>
+        <div class="card blue-grey lighten-5 z-depth-3">
+            <div class="card-content">
+
+                <div class="row">
+                    <div class="center">
+                        <h2 class="thin">Tus Pokemones</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s10 push-s1">
+                        <table id="orgTable" class="bordered highlight centered">
+                            <thead>
+                                <tr>
+                                    <th>Pic</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Peso</th>
+                                    <th>Altura</th>
+                                    <th>Vida</th>
+                                    <th>Puntos Combate</th>
+                                    <th>Apodo</th>
+                                </tr>
+                            </thead>
+                            @for(poke <- pokemones) {
+                                <tr id="@poke.id" class="dashboard-context">
+                                    <td style="cursor: pointer;">
+                                        <img src="@poke.urlImagen" alt="Tu pokemon" class="circle poke_image">
+                                    </td>
+                                    <td style="cursor: pointer;">@poke.nombre</td>
+                                    <td style="cursor: pointer;" id="@poke.tipo">@{pokeTipos.find(_.id == poke.tipo) match {
+                                        case Some(p) => p.nombre
+                                        case None => "Error de Tipo"
+                                    }}</td>
+                                    <td style="cursor: pointer;">@poke.peso</td>
+                                    <td style="cursor: pointer;">@poke.altura</td>
+                                    <td style="cursor: pointer;">@poke.vida</td>
+                                    <td style="cursor: pointer;">@poke.puntosCombate</td>
+                                    <td style="cursor: pointer;">@poke.apodo</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s2 push-s10">
+                        <a class="btn-floating btn-large waves-effect waves-light red" onclick="fabiconAction('/add');">
+                            <i class="material-icons">add</i>
+                        </a>
+                    </div>
+                </div>
+
+                    <!-- Edit Modal Structure -->
+                <div id="editModal" class="modal">
+
+                    <form action="" method="post" id="pokeForm" enctype="multipart/form-data">
+
+                        <div class="modal-content">
+
+                            <h4 class="thin">Poke Input</h4>
+
+                            <div class="row">
+
+
+                                <div class="input-field col s6">
+
+                                    <div class="row">
+                                        <img src="#" alt="Tu pokemon" class="circle responsive-img" id="pokeImg" hidden>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input type="text" name="urlImagen" accept=".jpg" id="imgURL">
+                                            <label for="imgURL">URL de la imagen</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="input-field col s6">
+
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input name="nombre" type="text" id="nombreInput">
+                                            <label for="nombreInput">Nombre</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s10">
+                                            <select name="tipo" id="tipoSelect">
+                                                <option value="" disabled selected>Selecciona un tipo</option>
+                                                @for(t <- pokeTipos) {
+                                                    <option value="@t.id" id="@t.id">@t.nombre</option>
+                                                }
+                                            </select>
+                                            <label for="tipoSelect">Tipo</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="input-field col s6">
+                                            <input name="peso" type="number" id="pesoInput" class="validate" step="0.01" min="0" max="10000">
+                                            <label for="pesoInput">Peso Kg.</label>
+                                        </div>
+
+                                        <div class="input-field col s6">
+                                            <input name="altura" type="number" id="alturaInput" class="validate" step="0.01" min="0" max="10000">
+                                            <label for="alturaInput">Altura mts.</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="input-field col s6">
+                                            <input name="vida" type="number" id="vidaInput" class="validate" min="0" max="12000">
+                                            <label for="vidaInput">Vida</label>
+                                        </div>
+
+                                        <div class="input-field col s6">
+                                            <input name="puntosCombate" type="number" id="puntosCombateInput" class="validate" min="0" max="12000">
+                                            <label for="puntosCombateInput">Puntos de Combate</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input name="apodo" type="text" id="apodoInput">
+                                            <label for="apodoInput">Apodo</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col s3 offset-s9">
+                                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">
+                                        Guardar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <script type="text/javascript">
+                        function fabiconAction(uri) {
+                            $("#pokeForm").attr("action", uri);
+                            $('#editModal').openModal();
+                        }
+                </script>
+
+            </div>
+        </div>
+    </div>
+
+}

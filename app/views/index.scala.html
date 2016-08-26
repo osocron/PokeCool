@@ -82,7 +82,7 @@
 
                                     <div class="row">
                                         <div class="input-field col s12">
-                                            <input type="text" name="urlImagen" accept=".jpg" id="imgURL">
+                                            <input type="text" name="urlImagen" accept=".jpg" id="imgURL" maxlength="250">
                                             <label for="imgURL">URL de la imagen</label>
                                         </div>
                                     </div>
@@ -169,6 +169,20 @@
                 <script type="text/javascript">
                         function fabiconAction(uri) {
                             $("#pokeForm").attr("action", uri);
+                            var img = $('#pokeImg');
+                            $("#imgURL").val("");
+                            img.attr('src', "");
+                            img.hide();
+                            $("#nombreInput").val("");
+                            var select = $("#tipoSelect");
+                            select.val(0);
+                            select.material_select();
+                            $("#pesoInput").val("");
+                            $("#alturaInput").val("");
+                            $("#vidaInput").val("");
+                            $("#puntosCombateInput").val("");
+                            $("#apodoInput").val("");
+                            Materialize.updateTextFields();
                             $('#editModal').openModal();
                         }
                 </script>

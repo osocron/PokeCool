@@ -1,1 +1,0 @@
-web: target/universal/stage/bin/PokeCool -Dhttp.port=${PORT}

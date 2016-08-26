@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           controllers.Application.dbWakeUp
 POST    /add                        controllers.Application.addPokemon()
 POST    /update/:id                 controllers.Application.updatePokemon(id: Int)
 POST    /del/:id                    controllers.Application.deletePokemon(id: Int)

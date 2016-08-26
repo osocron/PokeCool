@@ -13,6 +13,12 @@ import scala.concurrent._
 class Application @Inject()(pokeCoolDAO: PokeCoolDAO,
                             pokeTipoDAO: PokeTipoDAO) extends Controller {
 
+  def dbWakeUp = Action.async { request =>
+    pokeCoolDAO.getAll.map(s => Redirect(routes.Application.index())).recoverWith {
+      case ex: Exception => Future.successful(Redirect(routes.Application.index()))
+    }
+  }
+
   def index = Action.async { request =>
     for {
       p <- pokeCoolDAO.getAll

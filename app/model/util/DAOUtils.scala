@@ -65,5 +65,14 @@ trait DAOUtils[A <: Table[B], B] extends HasDatabaseConfigProvider[JdbcProfile] 
     case ex: Exception => ex.getCause.getMessage
   }
 
+  /**
+    * Deletes elements based on a predicate.
+    *
+    * @param p The predicate used to delete the elements
+    * @return  either (1) the row count for SQL Data Manipulation Language (DML)
+    *          statements or (2) 0 for SQL statements that return nothing
+    */
+  def deleteByPredicate(p: (A => Rep[Boolean])): Future[Int] = db.run(t.filter(p).delete)
+
 
 }

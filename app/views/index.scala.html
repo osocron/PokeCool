@@ -1,8 +1,6 @@
 
-@import play.api.data.Form
-@import helper._
 @import model._
-@import scala.util.Success
+@import play.api.data.Form
 @(pokemones: Seq[PokeCool], pokeTipos: Seq[PokeTipo], pokeForm: Form[PokeData])(implicit messages: Messages)
 
 @main("PokeCool") {
@@ -65,7 +63,7 @@
                     <!-- Edit Modal Structure -->
                 <div id="editModal" class="modal">
 
-                    <form action="" method="post" id="pokeForm" enctype="multipart/form-data">
+                    <form action="" method="post" id="pokeForm">
 
                         <div class="modal-content">
 

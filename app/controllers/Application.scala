@@ -3,13 +3,12 @@ package controllers
 import javax.inject.Inject
 
 import model._
-import play.api.mvc._
 import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
+import play.api.mvc._
 
-import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
-import java.io.FileInputStream
+import scala.concurrent._
 
 class Application @Inject()(pokeCoolDAO: PokeCoolDAO,
                             pokeTipoDAO: PokeTipoDAO) extends Controller {
@@ -23,7 +22,7 @@ class Application @Inject()(pokeCoolDAO: PokeCoolDAO,
     }
   }
 
-  def addPokemon() = Action.async(parse.multipartFormData) { implicit request =>
+  def addPokemon() = Action.async { implicit request =>
     PokeForm.form.bindFromRequest.fold(
       errors => Future.successful(Ok("errores en datos")),
       data => {

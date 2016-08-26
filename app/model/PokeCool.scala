@@ -1,23 +1,16 @@
 package model
 
-import java.security.MessageDigest
-import java.sql.Timestamp
 import javax.inject.Inject
-
-import play.api.data.Form
-import play.api.data.Forms._
 
 import model.util.DAOUtils
 import play.api.data.Form
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
-
-import scala.concurrent.Future
-import slick.driver.JdbcProfile
+import play.api.data.Forms._
+import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.MySQLDriver.api._
 import slick.lifted.ProvenShape
-import slick.profile.SqlProfile.ColumnOption.SqlType
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 case class PokeCool(id: Int,
                     nombre: String,
@@ -91,7 +84,7 @@ class PokeCoolDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvid
 
   override val t: TableQuery[PokeCoolTable] = TableQuery[PokeCoolTable]
 
-  def delete(id: Int): Future[Int] = db.run(t.filter(_.id === id).delete)
+  def delete(id: Int): Future[Int] = deleteByPredicate(t => t.id === id)
 
   def update(pokeCool: PokeCool): Future[String] =
     db.run(

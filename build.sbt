@@ -9,7 +9,7 @@ scalaVersion := "2.11.7"
 libraryDependencies ++= Seq( 
   "com.typesafe.play" %% "play-slick" % "2.0.0",
   "mysql" % "mysql-connector-java" % "5.1.38",
-  "org.postgresql" % "postgresql" % "9.3-1102-jdbc41",
+  "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
   jdbc , cache , ws   , specs2 % Test )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  

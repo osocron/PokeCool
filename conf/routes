@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.dbWakeUp
+GET     /pokemones                  controllers.Application.index
 POST    /add                        controllers.Application.addPokemon()
 POST    /update/:id                 controllers.Application.updatePokemon(id: Int)
 POST    /del/:id                    controllers.Application.deletePokemon(id: Int)
